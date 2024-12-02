@@ -63,6 +63,9 @@ class _HomeState extends State<Home> {
   }
 
   Widget _card(int index) {
+    String semester = courseList[index].semester;
+    String branch = courseList[index].branch;
+    String section = courseList[index].section;
     return Card(
       margin: EdgeInsets.all(4),
       elevation: 8,
@@ -72,54 +75,54 @@ class _HomeState extends State<Home> {
             Navigator.push(
               context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) =>FaceRecognition()
+                    builder: (BuildContext context) =>FaceRecognition(semester: semester, branch: branch, section: section)
                 )
             );
         },
-      child: Column(
-        children: [
-          Text(
-            courseList[index].courseId,
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.blueGrey,
-              fontWeight: FontWeight.bold,
+        child: Column(
+          children: [
+            Text(
+              courseList[index].courseId,
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text(
-            courseList[index].courseName,
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.blueGrey,
-              fontWeight: FontWeight.bold,
+            Text(
+              courseList[index].courseName,
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text(
-            courseList[index].semester,
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.blueGrey,
-              fontWeight: FontWeight.bold,
+            Text(
+              courseList[index].semester,
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text(
-            courseList[index].branch,
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.blueGrey,
-              fontWeight: FontWeight.bold,
+            Text(
+              courseList[index].branch,
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text(
-            courseList[index].section,
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.blueGrey,
-              fontWeight: FontWeight.bold,
+            Text(
+              courseList[index].section,
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
-      )
+          ],
+        )
       )
     );
   }

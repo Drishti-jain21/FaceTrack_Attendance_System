@@ -4,15 +4,20 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 
 class FaceRecognition extends StatefulWidget {
-  const FaceRecognition({Key? key}) : super(key: key);
+  final String semester;
+  final String branch;
+  final String section;
+  const FaceRecognition({Key? key, required this.semester, required this.branch, required this.section}) : super(key: key);
 
   @override
   State<FaceRecognition> createState() => _FaceRecognitionState();
 }
 
 class _FaceRecognitionState extends State<FaceRecognition> {
+
   var response;
   var result = [];
+
   String url = 'http://10.0.2.2:5000/process_video';
   final btnStyle = ButtonStyle(
     backgroundColor: WidgetStateProperty.all<Color>(Colors.grey[300]!),
@@ -63,7 +68,7 @@ class _FaceRecognitionState extends State<FaceRecognition> {
                   ElevatedButton(
                     onPressed: () async{
                       if(_selected){
-                        response = await fetchData(url, filePath);
+                        response = await fetchData(widget.semester,widget.branch,widget.section,url, filePath);
                         var decodedVal = jsonDecode(response);
                         setState(()  {
                           result = decodedVal["present"];

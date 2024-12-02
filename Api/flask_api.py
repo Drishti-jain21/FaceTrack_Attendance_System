@@ -19,17 +19,21 @@ def returnresult():
 
     if video.filename == '':
         return jsonify({'error': 'No selected file'}), 400
-    
+
+    semester = str(request.args['sem'])
+    branch = str(request.args['branch'])
+    section = str(request.args['sec'])
+
     temp_folder = 'temp_upload'
     os.makedirs(temp_folder, exist_ok=True)
     video_path = os.path.join(temp_folder, video.filename)
     video.save(video_path)
 
-    result =  faceRecognition(video_path)
+    result =  faceDetection(video_path, semester, branch, section)
     shutil.rmtree(temp_folder)
     return result
 
-def faceRecognition(video_path):
+def faceDetection(video_path, semester, branch, section):
 
     video = cv2.VideoCapture(video_path)
     if not video.isOpened():
@@ -70,6 +74,12 @@ def faceRecognition(video_path):
                 cropped_face = frame[y1:y2, x1:x2]
                 cv2.imwrite("./refinedImages/" + str(cropped) + ".png", cropped_face)
                 cropped += 1
+
+    return faceRecognition(cropped, semester, branch, section)
+
+def faceRecognition(cropped, semester, branch, section):
+
+    os.mkdir('database')
 
     present = []
 
