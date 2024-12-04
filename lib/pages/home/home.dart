@@ -63,11 +63,11 @@ class _HomeState extends State<Home> {
   }
 
   Widget _card(int index) {
-    String semester = courseList[index].semester;
+    int semester = courseList[index].semester;
     String branch = courseList[index].branch;
-    String section = courseList[index].section;
+    int section = courseList[index].section;
     return Card(
-      margin: EdgeInsets.all(4),
+      margin: EdgeInsets.all(10),
       elevation: 8,
       child: InkWell(
           splashColor: Colors.white24,
@@ -82,41 +82,41 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             Text(
-              courseList[index].courseId,
+              'Course Id: ${courseList[index].courseId}',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              courseList[index].courseName,
+              'Course Name: ${courseList[index].courseName}',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              courseList[index].semester,
+              'Semester: ${courseList[index].semester.toString()}',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              courseList[index].branch,
+              'Branch: ${courseList[index].branch}',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              courseList[index].section,
+              'Section: ${courseList[index].section.toString()}',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 color: Colors.blueGrey,
                 fontWeight: FontWeight.bold,
               ),

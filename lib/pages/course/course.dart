@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class Course{
   final String courseId;
   final String courseName;
-  final String semester;
+  final int semester;
   final String branch;
-  final String section;
+  final int section;
 
 
   Course(this.courseId, this.courseName, this.semester, this.branch, this.section);

@@ -59,7 +59,7 @@ class _AddCourseDialogState extends State<AddCourseDialog> {
               onPressed: () {
 
                 final course = Course(courseIdController.text, courseNameController.text,
-                    semesterController.text, branchController.text, sectionController.text);
+                    int.parse(semesterController.text), branchController.text, int.parse(sectionController.text));
                 widget.addCourse(course);
                 Navigator.of(context).pop();
 

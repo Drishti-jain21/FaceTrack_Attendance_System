@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-fetchData(String semester, String branch, String section, String url, String filepath) async{
+fetchData(int semester, String branch, int section, String url, String filepath) async{
   url += '?sem=$semester&branch=$branch&sec=$section';
   var request = http.MultipartRequest('POST', Uri.parse(url));
   request.files.add(await http.MultipartFile.fromPath("video", filepath));

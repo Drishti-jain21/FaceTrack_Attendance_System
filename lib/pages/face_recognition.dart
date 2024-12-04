@@ -4,9 +4,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 
 class FaceRecognition extends StatefulWidget {
-  final String semester;
+  final int semester;
   final String branch;
-  final String section;
+  final int section;
   const FaceRecognition({Key? key, required this.semester, required this.branch, required this.section}) : super(key: key);
 
   @override

@@ -8,6 +8,7 @@ import os
 from deepface import DeepFace
 from retinaface import RetinaFace
 import shutil
+from get_database import get_database
 
 app = Flask(__name__)
 
@@ -20,9 +21,9 @@ def returnresult():
     if video.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
-    semester = str(request.args['sem'])
+    semester = int(request.args['sem'])
     branch = str(request.args['branch'])
-    section = str(request.args['sec'])
+    section = int(request.args['sec'])
 
     temp_folder = 'temp_upload'
     os.makedirs(temp_folder, exist_ok=True)
@@ -79,36 +80,54 @@ def faceDetection(video_path, semester, branch, section):
 
 def faceRecognition(cropped, semester, branch, section):
 
+    dbname = get_database()
+
+    query = {
+        "semester" : semester,
+        "branch" : branch,
+        "section" : section
+    }
+
+    result = dbname.students.find(query)
     os.mkdir('database')
 
     present = []
+    student_id = []
+
+    for student in result:
+        roll_number = student["_id"]
+        student_id.append(roll_number)
+        file_name = "./database/"+roll_number+".jpg"
+        with open(file_name,"wb") as output_file:
+            output_file.write(student["photo"])
 
     for cropped_img in range(cropped):
-        for filename in os.listdir("./tmp"):  # Assuming 'tmp' folder contains the student faces database
-            roll_number = str(filename).split(".")[0]
-
-            if roll_number not in present:
+        for student in student_id:
+            file_name = "./database/"+student+".jpg"
+            
+            if student not in present:
                 img1_path = f"./refinedImages/{cropped_img}.png"
-                img2_path = f"./tmp/{filename}"
-
+                
                 img1 = cv2.imread(img1_path)
-                img2 = cv2.imread(img2_path)
+                img2 = cv2.imread(file_name)
 
                 if img1 is None or img2 is None:
-                    print(f"Error reading images {img1_path} or {img2_path}")
+                    print(f"Error reading images {img1_path} or {file_name}")
                     continue
 
                 # Use DeepFace's ArcFace for recognition
                 try:
-                    result = DeepFace.verify(img1_path, img2_path, model_name='ArcFace', enforce_detection=False)
+                    result = DeepFace.verify(img1_path, file_name, model_name='ArcFace', enforce_detection=False)
                     if result["verified"]:
                         present.append(roll_number)
                 except Exception as e:
                     print(f"Error in face verification: {e}")
                     continue
+
     
     shutil.rmtree('./frames')
     shutil.rmtree('./refinedImages')
+    shutil.rmtree('./database')
     students = {}
     students['present'] = present
 
